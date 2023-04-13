@@ -1,0 +1,8 @@
+{
+  "name": "app_menu",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "id": "ec636d39"
+}
