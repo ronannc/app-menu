@@ -1,0 +1,48 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-title><strong>Cardápios</strong></ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    <ion-grid>
+        <ion-row>
+            <ion-col size="12">
+                <ion-searchbar (ionInput)="searchCompanies()" [(ngModel)]="params.search"
+                               [debounce]="250"
+                               placeholder="Buscar cardápio"
+                ></ion-searchbar>
+            </ion-col>
+        </ion-row>
+        <ion-row *ngFor="let company of companies">
+            <ion-col size="12">
+
+                <ion-card>
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col size="12" sizeLg="2" sizeMd="2" sizeSm="2"
+                                     sizeXl="2" sizeXs="3">
+
+                                <ion-thumbnail>
+                                    <img [src]="company.url_logo">
+                                </ion-thumbnail>
+
+                            </ion-col>
+                            <ion-col size="12" sizeLg="10" sizeMd="10" sizeSm="10"
+                                     sizeXl="10" sizeXs="9">
+                                <ion-text><strong>{{company.name}}</strong></ion-text>
+                                <ion-text><p>{{company.description}}</p></ion-text>
+                                <ion-text><p>Das {{company.star_hours}} às
+                                    {{company.finish_hours}}</p></ion-text>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-card>
+
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <ion-infinite-scroll (ionInfinite)="getCompanies($event)">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+</ion-content>
