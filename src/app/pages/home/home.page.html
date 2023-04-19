@@ -14,7 +14,7 @@
                 ></ion-searchbar>
             </ion-col>
         </ion-row>
-        <ion-row *ngFor="let company of companies">
+        <ion-row *ngFor="let company of companies" routerLink="/menu/{{company.id}}">
             <ion-col size="12">
 
                 <ion-card>

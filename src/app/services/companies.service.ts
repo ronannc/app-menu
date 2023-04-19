@@ -14,6 +14,23 @@ export interface Company {
   finish_hours: string;
 }
 
+export interface ItemsMenu {
+  id: number;
+  category_item_menu_id: number;
+  company_id: number;
+  name: string;
+  description: string;
+  value: string;
+  url_image: string;
+}
+
+export interface CompanyItem {
+  id: number;
+  name: string;
+  company_id: number;
+  items_menu: ItemsMenu[]
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -26,6 +43,14 @@ export class CompaniesService {
     .pipe(
       tap(_ => console.log(`Companies fetched`)),
       catchError(this.handleError<Company[]>(`Get companies`))
+    );
+  }
+  
+  getCompanyItems(id: string, search = ''): Observable<CompanyItem[]> {
+    return this.http.get<CompanyItem[]>(environment.baseUrl + 'api/company/' + id + '/items-menu')
+    .pipe(
+      tap(_ => console.log(`Company items fetched`)),
+      catchError(this.handleError<CompanyItem[]>(`Get company items`))
     );
   }
   
