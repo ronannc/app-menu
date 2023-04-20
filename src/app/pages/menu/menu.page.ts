@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
-import {IonicModule} from '@ionic/angular';
+import {IonicModule, LoadingController} from '@ionic/angular';
 import {ActivatedRoute} from "@angular/router";
 import {SharedModule} from "../../shared/shared.module";
-import {CompaniesService, CompanyItem} from "../../services/companies.service";
+import {CompaniesService, Company, CompanyItem} from "../../services/companies.service";
 
 @Component({
   selector: 'app-menu',
@@ -18,26 +18,39 @@ export class MenuPage implements OnInit {
   id: string = '';
   search: string = '';
   companyItems: CompanyItem[] = [];
+  company: Company = {} as Company;
   
   constructor(
     private actRoute: ActivatedRoute,
-    private companiesService: CompaniesService
+    private companiesService: CompaniesService,
+    private loadingCtrl: LoadingController
   ) {
     this.id = this.actRoute.snapshot.paramMap.get('id') as string
   }
+  
   
   ngOnInit() {
   }
   
   ionViewWillEnter() {
     this.getCompanyItems()
+    this.getCompany()
   }
   
   getCompanyItems() {
     this.companiesService.getCompanyItems(this.id).subscribe({
       next: (res: any) => {
         this.companyItems.push(...res.data)
-        console.log(this.companyItems)
+      },
+      error: (error: any) => {
+      }
+    })
+  }
+  
+  getCompany() {
+    this.companiesService.getCompany(this.id).subscribe({
+      next: (res: Company) => {
+        this.company = res
       },
       error: (error: any) => {
       }

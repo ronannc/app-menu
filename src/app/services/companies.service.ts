@@ -54,6 +54,14 @@ export class CompaniesService {
     );
   }
   
+  getCompany(id: string): Observable<Company> {
+    return this.http.get<Company>(environment.baseUrl + 'api/company/' + id)
+    .pipe(
+      tap(_ => console.log(`Company fetched`)),
+      catchError(this.handleError<Company>(`Get company`))
+    );
+  }
+  
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error);
